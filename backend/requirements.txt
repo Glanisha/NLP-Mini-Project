@@ -1,3 +1,6 @@
 pypdf 
 fastapi
 python-multipart
+scikit-learn
+nltk
+numpy

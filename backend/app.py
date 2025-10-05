@@ -3,6 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from io import BytesIO
 from pypdf import PdfReader
 import uvicorn
+from matching_engine import get_resume_job_match_score
 
 app = FastAPI(
     title="PDF Processor API",
@@ -110,6 +111,27 @@ async def process_documents(
         print(jd_text[:500] + "..." if len(jd_text) > 500 else jd_text)
         print("\n" + "="*50)
         
+        # Calculate matching score
+        print("\n--- Calculating Resume-Job Match Score ---")
+        try:
+            matching_result = get_resume_job_match_score(resume_text, jd_text)
+            print(f"Overall Match Score: {matching_result['overall_match_percentage']}%")
+            print(f"Text Similarity Score: {matching_result['text_similarity_score']}%")
+            print("Skill Match Scores:", matching_result['skill_match_scores'])
+        except Exception as matching_error:
+            print(f"Warning: Could not calculate matching score: {matching_error}")
+            # Set default matching result in case of error
+            matching_result = {
+                'overall_match_percentage': 0.0,
+                'text_similarity_score': 0.0,
+                'skill_match_scores': {},
+                'resume_skills': {},
+                'job_description_skills': {},
+                'matched_skills': {},
+                'missing_skills': {},
+                'error': str(matching_error)
+            }
+        
     except HTTPException:
         raise
     except Exception as e:
@@ -123,7 +145,7 @@ async def process_documents(
         await resume.close()
         await job_description.close()
     
-    # Return comprehensive processing results
+    # Return comprehensive processing results with matching score
     return {
         "message": "Documents processed successfully! Check server console for extracted text.",
         "files_processed": {
@@ -141,7 +163,8 @@ async def process_documents(
             }
         },
         "total_text_extracted": len(resume_text) + len(jd_text),
-        "processing_timestamp": "processed successfully"
+        "processing_timestamp": "processed successfully",
+        "matching_analysis": matching_result
     }
 
 if __name__ == "__main__":
