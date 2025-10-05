@@ -4,6 +4,10 @@ from io import BytesIO
 from pypdf import PdfReader
 import uvicorn
 from matching_engine import get_resume_job_match_score
+import nltk
+import os
+nltk.download('punkt')
+nltk.download('stopwords')
 
 app = FastAPI(
     title="PDF Processor API",
@@ -168,9 +172,9 @@ async def process_documents(
     }
 
 if __name__ == "__main__":
+    port = int(os.environ.get("PORT", 8000))
     uvicorn.run(
-        app,  # Can use app object when reload=False
+        app,
         host="0.0.0.0",
-        port=8000
-        # reload=True  ← Remove this line
+        port=port
     )
