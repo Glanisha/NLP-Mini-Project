@@ -92,12 +92,13 @@ npm run dev
 
 | Name   | GitHub |
 |--------|--------|
-| Gavin  | [gavin100305](https://github.com/gavin100305) |
-| Liza   | [Glanisha](https://github.com/Glanisha) |
+| Liza  | [Glanisha](https://github.com/Glanisha) |
+| Gavin | [gavin100305](https://github.com/gavin100305) |
 
 </div>
 
 ---
+
 
 
 
