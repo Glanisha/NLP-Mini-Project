@@ -1,188 +1,103 @@
+<div align="center">
+
 # NLP Mini Project
 
-A compact, production-ready proof-of-concept application that analyzes a candidate's resume against a job description and returns a match analysis and recommended next steps. This repository contains a Python backend (FastAPI) and a React + Vite frontend.
+[![NLP](https://img.shields.io/badge/Natural%20Language%20Processing-NLP-blueviolet?style=for-the-badge&logo=python&logoColor=white)](https://github.com/gavin100305/NLP-Mini-Project)
+[![FastAPI](https://img.shields.io/badge/FastAPI-Backend-009688?style=for-the-badge&logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com/)
+[![React](https://img.shields.io/badge/React-Frontend-61DAFB?style=for-the-badge&logo=react&logoColor=black)](https://react.dev/)
+[![Vercel](https://img.shields.io/badge/Deployed%20on-Vercel-black?style=for-the-badge&logo=vercel&logoColor=white)](https://vercel.com/)
 
-This README explains the project's purpose, architecture, local development steps, environment variables, and deployment guidance for Vercel (frontend) and Uvicorn (backend).
+</div>
 
-## Table of contents
+---
 
-Quick links to the main sections:
+## Technology Stack
 
-- Overview
-   - [Why this project](#why-this-project)
-   - [Architecture](#architecture)
+<div align="center">
 
-- Getting started
-   - [Requirements](#requirements)
-   - [Local setup](#local-setup)
-      - [Backend (FastAPI)](#backend-fastapi)
-      - [Frontend (React + Vite)](#frontend-react--vite)
+![Python](https://img.shields.io/badge/Python-3.11+-3776AB?style=for-the-badge&logo=python&logoColor=white)
+![FastAPI](https://img.shields.io/badge/FastAPI-API-009688?style=for-the-badge&logo=fastapi&logoColor=white)
+![React](https://img.shields.io/badge/React-19.x-61DAFB?style=for-the-badge&logo=react&logoColor=black)
+![Vite](https://img.shields.io/badge/Vite-Build%20Tool-646CFF?style=for-the-badge&logo=vite&logoColor=white)
+![TailwindCSS](https://img.shields.io/badge/TailwindCSS-Styling-06B6D4?style=for-the-badge&logo=tailwindcss&logoColor=white)
 
-- Configuration & deployment
-   - [Environment variables](#environment-variables)
-   - [Deployment](#deployment)
-      - [Frontend on Vercel](#frontend-on-vercel)
-      - [Backend on a server / cloud](#backend-on-a-server--cloud)
+</div>
 
-- Usage & development
-   - [Usage](#usage)
-   - [Development notes](#development-notes)
+## Overview
 
-- Project
-   - [Team](#team)
-   - [License](#license)
+**NLP Mini Project** is a resume-to-job-description matching platform using NLP techniques. Upload your resume and a job description PDF, and get a professional match analysis with actionable recommendations.
 
-## Why this project
-
-This project demonstrates a full-stack workflow for performing NLP-driven resume-to-job-description matching. It is designed to be easy to run locally for development, and to be deployable to common hosting platforms.
+### Key Features
+- Upload resume and job description PDFs
+- Backend NLP analysis and skill extraction
+- Match score and recommendations
+- Clean, modern UI with dark theme
+- Easy deployment (Vercel for frontend, any Python host for backend)
 
 ## Architecture
 
-- Frontend: React + Vite. Collects two PDF files (resume and job description), submits them to the backend, and displays a clean, professional match analysis.
-- Backend: FastAPI. Receives multipart uploads, runs the matching/analysis logic, and returns JSON containing the matching results used to render the frontend.
+```
+NLP-Mini-Project/
+├── frontend/   # React + Vite (UI)
+├── backend/    # FastAPI (API & NLP engine)
+└── README.md   # Project documentation
+```
 
-## Repository structure
+## Quick Start
 
-- `frontend/` — React + Vite app (UI components, styles)
-- `backend/` — FastAPI application (endpoints, matching engine)
-- `README.md` — this file
+### Prerequisites
+- Node.js (16+)
+- Python 3.11+
 
-## Requirements
+### Backend Setup
+```bash
+cd backend
+python -m venv .venv
+.\.venv\Scripts\Activate.ps1
+pip install -r requirements.txt
+uvicorn main:app --reload
+```
 
-- Node.js (16+ recommended) and npm or yarn for the frontend
-- Python 3.11+ (or 3.10) and pip for the backend
+### Frontend Setup
+```bash
+cd frontend
+npm install
+copy .env.example .env
+# Edit .env and set VITE_API_URL if needed
+npm run dev
+```
 
-## Local setup
+## Environment Variables
+- `VITE_API_URL` (frontend): Backend endpoint (e.g. `https://your-backend.com/process-docs`).
+- Backend: See `backend/` for any `.env.example` or config files.
 
-Follow these steps to run both frontend and backend locally.
+## Deployment
+- **Frontend:** Deploy to Vercel. Set `VITE_API_URL` in Vercel project settings.
+- **Backend:** Deploy to any Python host (Render, Railway, Azure, etc.) with Uvicorn.
 
-### Backend (FastAPI)
+## API Summary
+- `POST /process-docs` — Upload resume and job description PDFs, receive match analysis JSON.
+- (Optional) `GET /health` — Health check endpoint.
 
-1. Create a Python virtual environment and install dependencies:
+## Usage
+1. Open the frontend in your browser.
+2. Upload your resume and job description PDFs.
+3. Click Analyze to view your match score and recommendations.
 
-   ```powershell
-   cd backend
-   python -m venv .venv
-   .\.venv\Scripts\Activate.ps1
+## Team
 
-   # NLP Mini Project
+<div align="center">
 
-   This repository contains a compact full-stack proof-of-concept that analyzes a candidate's resume against a job description and produces a matching analysis and recommendations. It includes a Python FastAPI backend and a React + Vite frontend.
+**Made for: NLP Mini Project**
 
-   Overview
-   --------
+| Name   | GitHub |
+|--------|--------|
+| Gavin  | [gavin100305](https://github.com/gavin100305) |
+| Liza   | [Glanisha](https://github.com/Glanisha) |
 
-   This project demonstrates a simple, deployable workflow for document upload, NLP-based analysis, and results visualization. It's intended for learning, hackathon demos, and as a foundation for productionization.
+</div>
 
-   Key capabilities
-   ----------------
+---
 
-   - Upload a resume PDF and a job description PDF via the frontend
-   - Backend accepts multipart uploads, runs the matching engine, and returns structured JSON
-   - Frontend displays match score, extracted skills, and suggested next steps
 
-   Technology stack
-   ----------------
-
-   - Frontend: React (Vite) with Tailwind CSS
-   - Backend: Python (FastAPI) served with Uvicorn
-   - Deployment: Frontend (Vercel), Backend (any Python host / container)
-
-   Repository layout
-   -----------------
-
-   ```
-   NLP-Mini-Project/
-   ├── frontend/        # React + Vite application
-   ├── backend/         # FastAPI application and matching engine
-   └── README.md        # This file
-   ```
-
-   Getting started — quick setup
-   -----------------------------
-
-   Prerequisites
-
-   - Node.js 16+ and npm or yarn
-   - Python 3.10+ (3.11 recommended)
-
-   Run the backend
-
-   ```powershell
-   cd backend
-   python -m venv .venv
-   .\.venv\Scripts\Activate.ps1
-   pip install -r requirements.txt
-   uvicorn main:app --reload
-   ```
-
-   Run the frontend
-
-   ```powershell
-   cd frontend
-   npm install
-   copy .env.example .env
-   # Edit .env to set VITE_API_URL if your backend is not the default
-   npm run dev
-   ```
-
-   Configuration
-   -------------
-
-   Frontend environment
-
-   - `VITE_API_URL` — full backend endpoint (e.g., `https://api.example.com/process-docs`). The frontend falls back to `http://localhost:8000/process-docs` when this is not set.
-
-   Backend environment
-
-   - Check `backend/` for any configuration or `.env.example` files. Typical values (if present) include database connection strings and secret keys.
-
-   API summary
-   -----------
-
-   The backend exposes a small set of endpoints (example paths):
-
-   - `POST /process-docs` — Accepts `resume` and `job_description` multipart files and returns JSON with matching analysis
-   - (Optional) `GET /health` — Healthcheck endpoint for readiness
-
-   Deployment notes
-   ----------------
-
-   Frontend (Vercel)
-
-   1. Connect the repository to Vercel.
-   2. In Vercel's project settings, add an environment variable named `VITE_API_URL` with your backend endpoint.
-   3. Deploy — Vite reads env vars at build time, so ensure the variable is present before building.
-
-   Backend
-
-   - Deploy anywhere that runs Python apps (e.g., Render, Railway, Docker containers on cloud providers). Serve with Uvicorn/Gunicorn behind a reverse proxy for production.
-
-   Usage
-   -----
-
-   1. Open the frontend in your browser.
-   2. Upload a Resume PDF and a Job Description PDF.
-   3. Click Analyze and review the matched skills and recommendations.
-
-   Development notes
-   -----------------
-
-   - Styling uses OKLCH-based dark theme variables and Tailwind utilities.
-   - If you change environment variables used by the frontend, rebuild/redeploy the static site.
-
-   Team & credits
-   --------------
-
-   Made for: NLP Mini Project
-
-   Authors:
-
-   - Gavin — https://github.com/gavin100305
-   - Liza — https://github.com/Glanisha
-
-   License
-   -------
-
-   Add a license file (for example MIT) if you wish to make this code open source.
 
