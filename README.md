@@ -84,6 +84,19 @@ npm run dev
 2. Upload your resume and job description PDFs.
 3. Click Analyze to view your match score and recommendations.
 
+## Jupyter Notebook (Academic Submission)
+
+The repository includes a Jupyter notebook `nlp_backend_notebook.ipynb` demonstrating the full backend NLP pipeline (PDF extraction, preprocessing, skill extraction, semantic similarity using SentenceTransformers, and matching analysis). This notebook is intended for academic submission and hands-on exploration.
+
+Testing with your own PDFs
+- To test the notebook or the backend locally, place two PDF files in the project root with the exact filenames:
+  - `resume.pdf`
+  - `job_description.pdf`
+
+- Open `nlp_backend_notebook.ipynb` and run the cells. The notebook will automatically detect these files and run the full analysis pipeline, then save results to `analysis_results.json` in the project root.
+
+- If the files are not found, the notebook will list available PDF files in the current directory and show the working directory to help troubleshoot.
+
 ## Team
 
 <div align="center">
@@ -98,7 +111,3 @@ npm run dev
 </div>
 
 ---
-
-
-
-
