@@ -6,7 +6,15 @@ import FileUpload from "./components/FileUpload"
 import ResultsDisplay from "./components/ResultsDisplay"
 
 const App = () => {
-  const API_URL = "http://localhost:8000/process-docs"
+  // Use Vite environment variable for the backend URL. Vite exposes variables that start with VITE_ via import.meta.env
+  // Example value (production): https://your-backend.example.com/process-docs
+  const API_URL = import.meta.env.VITE_API_URL || "http://localhost:8000/process-docs"
+
+  if (!import.meta.env.VITE_API_URL) {
+    // Warn during development when the env var isn't set so deployers know to add it in Vercel
+    // eslint-disable-next-line no-console
+    console.warn("VITE_API_URL is not set. Falling back to http://localhost:8000/process-docs. Set VITE_API_URL in your Vercel/environment to point to the backend.")
+  }
 
   const [resumeFile, setResumeFile] = useState(null)
   const [jdFile, setJdFile] = useState(null)
