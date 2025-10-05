@@ -16,16 +16,7 @@ from nltk.stem import PorterStemmer
 
 from tech_mappings import TECH_MAPPINGS, SKILL_TO_CATEGORY
 
-# Download required NLTK data
-try:
-    nltk.data.find('tokenizers/punkt')
-except LookupError:
-    nltk.download('punkt')
-
-try:
-    nltk.data.find('corpora/stopwords')
-except LookupError:
-    nltk.download('stopwords')
+# NLTK data is pre-bundled, no need to download at runtime
 
 class ResumeJobMatcher:
     def __init__(self):
