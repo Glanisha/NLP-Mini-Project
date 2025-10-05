@@ -6,8 +6,10 @@ import uvicorn
 from matching_engine import get_resume_job_match_score
 import nltk
 import os
-nltk.download('punkt')
-nltk.download('stopwords')
+nltk.data.path.append(os.path.join(os.path.dirname(__file__), 'nltk_data'))
+
+print(nltk.data.path)
+
 
 app = FastAPI(
     title="PDF Processor API",

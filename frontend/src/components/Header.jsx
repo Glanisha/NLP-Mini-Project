@@ -3,14 +3,14 @@ import { FaRocket, FaBrain } from "react-icons/fa"
 const Header = () => {
   return (
     <div className="text-center mb-12">
-      <div className="flex justify-center items-center mb-8">
+      {/* <div className="flex justify-center items-center mb-8">
         <div className="relative">
           <div className="relative bg-primary p-5 rounded-lg shadow-lg">
             <FaBrain className="w-10 h-10 text-primary-foreground" />
           </div>
         </div>
         <FaRocket className="w-7 h-7 text-foreground ml-6" />
-      </div>
+      </div> */}
 
       <h1 className="text-5xl sm:text-6xl font-extrabold mb-4 leading-tight text-foreground">
         Smart Resume Matcher
