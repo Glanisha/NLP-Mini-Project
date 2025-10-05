@@ -4,3 +4,5 @@ python-multipart
 scikit-learn
 nltk
 numpy
+uvicorn[standard]
+sentence-transformers
