@@ -6,21 +6,31 @@ This README explains the project's purpose, architecture, local development step
 
 ## Table of contents
 
-- [Why this project](#why-this-project)
-- [Architecture](#architecture)
-- [Repository structure](#repository-structure)
-- [Requirements](#requirements)
-- [Local setup](#local-setup)
-  - [Backend (FastAPI)](#backend-fastapi)
-  - [Frontend (React + Vite)](#frontend-react--vite)
-- [Environment variables](#environment-variables)
-- [Deployment](#deployment)
-  - [Frontend on Vercel](#frontend-on-vercel)
-  - [Backend on a server / cloud](#backend-on-a-server--cloud)
-- [Usage](#usage)
-- [Development notes](#development-notes)
-- [Contributing](#contributing)
-- [License](#license)
+Quick links to the main sections:
+
+- Overview
+   - [Why this project](#why-this-project)
+   - [Architecture](#architecture)
+
+- Getting started
+   - [Requirements](#requirements)
+   - [Local setup](#local-setup)
+      - [Backend (FastAPI)](#backend-fastapi)
+      - [Frontend (React + Vite)](#frontend-react--vite)
+
+- Configuration & deployment
+   - [Environment variables](#environment-variables)
+   - [Deployment](#deployment)
+      - [Frontend on Vercel](#frontend-on-vercel)
+      - [Backend on a server / cloud](#backend-on-a-server--cloud)
+
+- Usage & development
+   - [Usage](#usage)
+   - [Development notes](#development-notes)
+
+- Project
+   - [Team](#team)
+   - [License](#license)
 
 ## Why this project
 
@@ -54,73 +64,125 @@ Follow these steps to run both frontend and backend locally.
    cd backend
    python -m venv .venv
    .\.venv\Scripts\Activate.ps1
-   pip install -r requirements.txt
+
+   # NLP Mini Project
+
+   This repository contains a compact full-stack proof-of-concept that analyzes a candidate's resume against a job description and produces a matching analysis and recommendations. It includes a Python FastAPI backend and a React + Vite frontend.
+
+   Overview
+   --------
+
+   This project demonstrates a simple, deployable workflow for document upload, NLP-based analysis, and results visualization. It's intended for learning, hackathon demos, and as a foundation for productionization.
+
+   Key capabilities
+   ----------------
+
+   - Upload a resume PDF and a job description PDF via the frontend
+   - Backend accepts multipart uploads, runs the matching engine, and returns structured JSON
+   - Frontend displays match score, extracted skills, and suggested next steps
+
+   Technology stack
+   ----------------
+
+   - Frontend: React (Vite) with Tailwind CSS
+   - Backend: Python (FastAPI) served with Uvicorn
+   - Deployment: Frontend (Vercel), Backend (any Python host / container)
+
+   Repository layout
+   -----------------
+
+   ```
+   NLP-Mini-Project/
+   ├── frontend/        # React + Vite application
+   ├── backend/         # FastAPI application and matching engine
+   └── README.md        # This file
    ```
 
-2. Run the backend with hot reload (development):
+   Getting started — quick setup
+   -----------------------------
+
+   Prerequisites
+
+   - Node.js 16+ and npm or yarn
+   - Python 3.10+ (3.11 recommended)
+
+   Run the backend
 
    ```powershell
+   cd backend
+   python -m venv .venv
+   .\.venv\Scripts\Activate.ps1
+   pip install -r requirements.txt
    uvicorn main:app --reload
    ```
 
-   By default the backend listens on `http://127.0.0.1:8000` and exposes an endpoint at `/process-docs`.
-
-### Frontend (React + Vite)
-
-1. Install dependencies and copy the example env:
+   Run the frontend
 
    ```powershell
    cd frontend
    npm install
    copy .env.example .env
-   # Edit .env and set VITE_API_URL if your backend is not on the default localhost:8000
-   ```
-
-2. Run the dev server:
-
-   ```powershell
+   # Edit .env to set VITE_API_URL if your backend is not the default
    npm run dev
    ```
 
-The frontend will use the environment variable `VITE_API_URL` when set, and otherwise fall back to `http://localhost:8000/process-docs`.
+   Configuration
+   -------------
 
-## Environment variables
+   Frontend environment
 
-- `VITE_API_URL` (frontend): Full backend endpoint including path (for example `https://api.example.com/process-docs`). Set this in Vercel or your local `.env` when not using the default local backend.
+   - `VITE_API_URL` — full backend endpoint (e.g., `https://api.example.com/process-docs`). The frontend falls back to `http://localhost:8000/process-docs` when this is not set.
 
-Backend env vars (if any) should be set in `backend/.env` or via your hosting environment — check `backend/` for any `.env.example` or config values.
+   Backend environment
 
-## Deployment
+   - Check `backend/` for any configuration or `.env.example` files. Typical values (if present) include database connection strings and secret keys.
 
-### Frontend on Vercel
+   API summary
+   -----------
 
-1. Push your repo to GitHub (or connect your Git provider) and import the project in Vercel.
-2. In Vercel dashboard → Project → Settings → Environment Variables, add the key `VITE_API_URL` and set the value to your backend endpoint (e.g. `https://api.example.com/process-docs`).
-3. Deploy the project. Vite reads env vars at build time, so redeploy after changing env variables.
+   The backend exposes a small set of endpoints (example paths):
 
-See `frontend/VERCEL.md` for a short guide.
+   - `POST /process-docs` — Accepts `resume` and `job_description` multipart files and returns JSON with matching analysis
+   - (Optional) `GET /health` — Healthcheck endpoint for readiness
 
-### Backend on a server / cloud
+   Deployment notes
+   ----------------
 
-You can deploy the backend using any provider that supports Python apps (e.g., Render, Railway, AWS, Azure). A straightforward option for simple hosting is to use a small Linux server and run with Uvicorn/Hypercorn behind a process manager (systemd) and reverse proxy (Nginx).
+   Frontend (Vercel)
 
-## Usage
+   1. Connect the repository to Vercel.
+   2. In Vercel's project settings, add an environment variable named `VITE_API_URL` with your backend endpoint.
+   3. Deploy — Vite reads env vars at build time, so ensure the variable is present before building.
 
-1. Open the frontend in a browser.
-2. Upload a Resume PDF and a Job Description PDF.
-3. Click Analyze. The frontend will upload both files to the backend endpoint and display the results when complete.
+   Backend
 
-## Development notes
+   - Deploy anywhere that runs Python apps (e.g., Render, Railway, Docker containers on cloud providers). Serve with Uvicorn/Gunicorn behind a reverse proxy for production.
 
-- The frontend is already themed using OKLCH dark variables and uses CSS custom properties for typography. Tailwind utility classes are used for layout and weights (font-bold, font-medium).
-- The backend matching logic is implemented in `backend/matching_engine.py` and exposed via the FastAPI app in `backend/app.py` (or `backend/main.py`).
+   Usage
+   -----
 
-## Team
+   1. Open the frontend in your browser.
+   2. Upload a Resume PDF and a Job Description PDF.
+   3. Click Analyze and review the matched skills and recommendations.
 
-Made for: NLP Mini Project
+   Development notes
+   -----------------
 
-Authors:
+   - Styling uses OKLCH-based dark theme variables and Tailwind utilities.
+   - If you change environment variables used by the frontend, rebuild/redeploy the static site.
 
-- Liza — https://github.com/Glanisha
-- Gavin — https://github.com/gavin100305
+   Team & credits
+   --------------
+
+   Made for: NLP Mini Project
+
+   Authors:
+
+   - Gavin — https://github.com/gavin100305
+   - Liza — https://github.com/Glanisha
+
+   License
+   -------
+
+   Add a license file (for example MIT) if you wish to make this code open source.
 
