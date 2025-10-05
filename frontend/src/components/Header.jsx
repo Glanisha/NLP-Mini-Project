@@ -1,43 +1,42 @@
-import React from 'react';
-import { FaFileAlt, FaRocket } from 'react-icons/fa';
+import { FaRocket, FaBrain } from "react-icons/fa"
 
 const Header = () => {
   return (
-    <div className="text-center mb-10">
-      <div className="flex justify-center items-center mb-6">
+    <div className="text-center mb-12">
+      <div className="flex justify-center items-center mb-8">
         <div className="relative">
-          <div className="absolute inset-0 bg-gradient-to-r from-indigo-500 to-purple-600 rounded-full blur-lg opacity-30 animate-pulse"></div>
-          <div className="relative bg-gradient-to-r from-indigo-600 to-purple-700 p-4 rounded-full shadow-xl">
-            <FaFileAlt className="w-8 h-8 text-white" />
+          <div className="relative bg-primary p-5 rounded-lg shadow-lg">
+            <FaBrain className="w-10 h-10 text-primary-foreground" />
           </div>
         </div>
-        <FaRocket className="w-6 h-6 text-indigo-500 ml-4 animate-bounce" />
+        <FaRocket className="w-7 h-7 text-foreground ml-6" />
       </div>
-      
-      <h1 className="text-4xl font-extrabold bg-gradient-to-r from-indigo-600 to-purple-700 bg-clip-text text-transparent mb-4">
+
+      <h1 className="text-5xl sm:text-6xl font-extrabold mb-4 leading-tight text-foreground">
         Smart Resume Matcher
       </h1>
-      
-      <p className="text-lg text-gray-600 max-w-2xl mx-auto leading-relaxed">
-        Analyze your resume against job descriptions. Get clear insights, skill matching, and improvement suggestions.
+
+      <p className="text-lg sm:text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed mb-8">
+        Leverage AI-powered analysis to match your resume against job descriptions. Get instant insights, skill
+        matching, and actionable improvement suggestions.
       </p>
-      
-      <div className="flex justify-center items-center mt-6 space-x-8">
-        <div className="flex items-center text-sm text-gray-500">
-          <div className="w-2 h-2 bg-green-500 rounded-full mr-2 animate-pulse"></div>
-          Skill Analysis
+
+      <div className="flex flex-wrap justify-center items-center gap-6 sm:gap-8">
+        <div className="flex items-center text-sm text-muted-foreground">
+          <div className="w-2 h-2 bg-primary rounded-full mr-2"></div>
+          <span className="font-medium">AI Skill Analysis</span>
         </div>
-        <div className="flex items-center text-sm text-gray-500">
-          <div className="w-2 h-2 bg-blue-500 rounded-full mr-2 animate-pulse"></div>
-          Instant Results
+        <div className="flex items-center text-sm text-muted-foreground">
+          <div className="w-2 h-2 bg-primary rounded-full mr-2"></div>
+          <span className="font-medium">Instant Results</span>
         </div>
-        <div className="flex items-center text-sm text-gray-500">
-          <div className="w-2 h-2 bg-purple-500 rounded-full mr-2 animate-pulse"></div>
-          Skill Insights
+        <div className="flex items-center text-sm text-muted-foreground">
+          <div className="w-2 h-2 bg-primary rounded-full mr-2"></div>
+          <span className="font-medium">Career Insights</span>
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default Header;
+export default Header

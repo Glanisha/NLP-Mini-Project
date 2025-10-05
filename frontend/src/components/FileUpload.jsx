@@ -1,60 +1,54 @@
-import React, { useRef, useState } from 'react';
-import { FaFileAlt, FaUpload, FaCheckCircle, FaCloudUploadAlt } from 'react-icons/fa';
+import { useRef, useState } from "react"
+import { FaFileAlt, FaUpload, FaCheckCircle, FaCloudUploadAlt, FaSpinner } from "react-icons/fa"
 
-const FileUploadCard = ({ 
-  label, 
-  file, 
-  onFileChange, 
-  accept = "application/pdf",
-  maxSize = "1MB",
-  step = "1"
-}) => {
-  const [isDragOver, setIsDragOver] = useState(false);
-  const fileInputRef = useRef(null);
+const FileUploadCard = ({ label, file, onFileChange, accept = "application/pdf", maxSize = "1MB", step = "1" }) => {
+  const [isDragOver, setIsDragOver] = useState(false)
+  const fileInputRef = useRef(null)
 
   const handleDragOver = (e) => {
-    e.preventDefault();
-    setIsDragOver(true);
-  };
+    e.preventDefault()
+    setIsDragOver(true)
+  }
 
   const handleDragLeave = (e) => {
-    e.preventDefault();
-    setIsDragOver(false);
-  };
+    e.preventDefault()
+    setIsDragOver(false)
+  }
 
   const handleDrop = (e) => {
-    e.preventDefault();
-    setIsDragOver(false);
-    
-    const files = e.dataTransfer.files;
+    e.preventDefault()
+    setIsDragOver(false)
+
+    const files = e.dataTransfer.files
     if (files.length > 0) {
-      onFileChange({ target: { files } });
+      onFileChange({ target: { files } })
     }
-  };
+  }
 
   const handleClick = () => {
-    fileInputRef.current?.click();
-  };
+    fileInputRef.current?.click()
+  }
 
   return (
-    <div className="flex flex-col space-y-3">
-      <label className="text-sm font-semibold text-gray-700 flex items-center">
-        <span className="bg-indigo-100 text-indigo-600 rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold mr-2">
+    <div className="flex flex-col space-y-4">
+      <label className="text-sm font-semibold text-foreground flex items-center">
+        <span className="bg-primary text-primary-foreground rounded-full w-7 h-7 flex items-center justify-center text-xs font-bold mr-3">
           {step}
         </span>
-        <FaFileAlt className="w-4 h-4 mr-2 text-indigo-600" />
+        <FaFileAlt className="w-4 h-4 mr-2 text-foreground" />
         {label}
       </label>
-      
+
       <div
         className={`
-          relative border-2 border-dashed rounded-2xl p-6 cursor-pointer
-          transition-all duration-300 ease-in-out transform hover:scale-[1.02]
-          ${isDragOver 
-            ? 'border-indigo-400 bg-indigo-50 shadow-lg' 
-            : file 
-            ? 'border-green-400 bg-green-50 shadow-md' 
-            : 'border-gray-300 bg-gray-50 hover:border-indigo-300 hover:bg-indigo-50'
+          relative border-2 border-dashed rounded-lg p-8 cursor-pointer
+          transition-all duration-300 ease-in-out
+          ${
+            isDragOver
+              ? "border-primary bg-muted"
+              : file
+                ? "border-primary bg-muted"
+                : "border-border bg-card hover:border-primary hover:bg-muted"
           }
         `}
         onDragOver={handleDragOver}
@@ -62,144 +56,104 @@ const FileUploadCard = ({
         onDrop={handleDrop}
         onClick={handleClick}
       >
-        <input
-          ref={fileInputRef}
-          type="file"
-          className="hidden"
-          accept={accept}
-          onChange={onFileChange}
-        />
-        
+        <input ref={fileInputRef} type="file" className="hidden" accept={accept} onChange={onFileChange} />
+
         <div className="flex flex-col items-center text-center">
           {file ? (
             <>
-              <div className="bg-green-100 p-3 rounded-full mb-3">
-                <FaCheckCircle className="w-8 h-8 text-green-600" />
+              <div className="bg-primary p-4 rounded-full mb-4">
+                <FaCheckCircle className="w-10 h-10 text-primary-foreground" />
               </div>
-              <p className="text-sm font-semibold text-green-700 mb-1 truncate max-w-full">
-                {file.name}
-              </p>
-              <p className="text-xs text-green-600">
+              <p className="text-base font-semibold text-foreground mb-2 truncate max-w-full">{file.name}</p>
+              <p className="text-sm text-muted-foreground">
                 {(file.size / 1024 / 1024).toFixed(2)} MB • Ready to analyze
               </p>
             </>
           ) : (
             <>
-              <div className={`p-3 rounded-full mb-3 transition-colors ${
-                isDragOver ? 'bg-indigo-100' : 'bg-gray-100'
+              <div className={`p-4 rounded-full mb-4 transition-all duration-300 ${
+                isDragOver ? "bg-primary" : "bg-muted"
               }`}>
                 {isDragOver ? (
-                  <FaCloudUploadAlt className="w-8 h-8 text-indigo-500 animate-bounce" />
+                  <FaCloudUploadAlt className="w-10 h-10 text-primary-foreground" />
                 ) : (
-                  <FaUpload className="w-8 h-8 text-gray-400" />
+                  <FaUpload className="w-10 h-10 text-muted-foreground" />
                 )}
               </div>
-              <p className="text-sm font-medium text-gray-700 mb-1">
+              <p className="text-base font-medium text-foreground mb-2">
                 {isDragOver ? "Drop your file here" : "Click to upload or drag & drop"}
               </p>
-              <p className="text-xs text-gray-500">
-                PDF files only • Max {maxSize}
-              </p>
+              <p className="text-sm text-muted-foreground">PDF files only • Max {maxSize}</p>
             </>
           )}
         </div>
-        
-        {/* Animated background for drag state */}
-        {isDragOver && (
-          <div className="absolute inset-0 bg-gradient-to-r from-indigo-500/10 to-purple-500/10 rounded-2xl animate-pulse"></div>
-        )}
       </div>
     </div>
-  );
-};
+  )
+}
 
-const FileUpload = ({ 
-  resumeFile, 
-  jobFile, 
-  onResumeChange, 
-  onJobChange, 
-  onSubmit, 
-  loading,
-  disabled = false
-}) => {
-  const isReady = resumeFile && jobFile && !loading && !disabled;
+const FileUpload = ({ resumeFile, jobFile, onResumeChange, onJobChange, onSubmit, loading, disabled = false }) => {
+  const isReady = resumeFile && jobFile && !loading && !disabled
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-10">
       {/* Upload Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-        <FileUploadCard
-          label="Upload Your Resume"
-          file={resumeFile}
-          onFileChange={onResumeChange}
-          step="1"
-        />
-        <FileUploadCard
-          label="Upload Job Description"
-          file={jobFile}
-          onFileChange={onJobChange}
-          step="2"
-        />
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <FileUploadCard label="Upload Your Resume" file={resumeFile} onFileChange={onResumeChange} step="1" />
+        <FileUploadCard label="Upload Job Description" file={jobFile} onFileChange={onJobChange} step="2" />
       </div>
-      
+
       {/* Progress Indicator */}
       <div className="flex justify-center">
         <div className="flex items-center space-x-4">
           <div className={`w-3 h-3 rounded-full transition-all duration-300 ${
-            resumeFile ? 'bg-green-500 shadow-lg shadow-green-500/30' : 'bg-gray-300'
+            resumeFile ? "bg-primary" : "bg-muted"
           }`}></div>
-          <div className={`h-1 w-16 rounded transition-all duration-300 ${
-            resumeFile ? 'bg-gradient-to-r from-green-500 to-indigo-500' : 'bg-gray-300'
-          }`}></div>
-          <div className={`w-3 h-3 rounded-full transition-all duration-300 ${
-            jobFile ? 'bg-green-500 shadow-lg shadow-green-500/30' : 'bg-gray-300'
-          }`}></div>
-          <div className={`h-1 w-16 rounded transition-all duration-300 ${
-            isReady ? 'bg-gradient-to-r from-indigo-500 to-purple-500' : 'bg-gray-300'
+          <div className={`h-1 w-20 rounded transition-all duration-500 ${
+            resumeFile ? "bg-primary" : "bg-muted"
           }`}></div>
           <div className={`w-3 h-3 rounded-full transition-all duration-300 ${
-            isReady ? 'bg-purple-500 shadow-lg shadow-purple-500/30 animate-pulse' : 'bg-gray-300'
+            jobFile ? "bg-primary" : "bg-muted"
+          }`}></div>
+          <div className={`h-1 w-20 rounded transition-all duration-500 ${
+            isReady ? "bg-primary" : "bg-muted"
+          }`}></div>
+          <div className={`w-3 h-3 rounded-full transition-all duration-300 ${
+            isReady ? "bg-primary" : "bg-muted"
           }`}></div>
         </div>
       </div>
-      
+
       {/* Submit Button */}
       <div className="flex justify-center">
         <button
           onClick={onSubmit}
           disabled={!isReady}
           className={`
-            relative px-8 py-4 rounded-2xl font-semibold text-lg shadow-lg
-            transition-all duration-300 ease-in-out transform
-            ${isReady
-              ? 'bg-gradient-to-r from-indigo-600 to-purple-600 text-white hover:scale-105 hover:shadow-xl active:scale-95'
-              : 'bg-gray-300 text-gray-500 cursor-not-allowed'
+            relative px-10 py-5 rounded-lg font-bold text-lg shadow-lg
+            transition-all duration-300 ease-in-out
+            ${
+              isReady
+                ? "bg-primary text-primary-foreground hover:opacity-90"
+                : "bg-muted text-muted-foreground cursor-not-allowed"
             }
           `}
         >
           {loading ? (
             <div className="flex items-center space-x-3">
-              <svg className="animate-spin w-5 h-5 text-white" viewBox="0 0 24 24">
-                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
-                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
-              </svg>
+              <FaSpinner className="animate-spin w-5 h-5" />
               <span>Analyzing Documents...</span>
             </div>
           ) : (
-            <div className="flex items-center space-x-2">
-              <FaCloudUploadAlt className="w-5 h-5" />
+            <div className="flex items-center space-x-3">
+              <FaCloudUploadAlt className="w-6 h-6" />
               <span>Analyze Resume Match</span>
             </div>
-          )}
-          
-          {/* Glow effect for ready state */}
-          {isReady && !loading && (
-            <div className="absolute inset-0 bg-gradient-to-r from-indigo-600 to-purple-600 rounded-2xl blur-lg opacity-30 animate-pulse"></div>
           )}
         </button>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default FileUpload;
+export default FileUpload
